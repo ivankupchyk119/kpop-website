@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-POP WORLD | Odkryj Magię Korean Pop</title>
+    <title>K-POP STORE | Oficjalny Sklep z Merchandise K-Pop</title>
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -14,14 +13,13 @@
     <div class="popup-overlay" id="popup">
         <div class="popup-content">
             <button class="close-popup" onclick="closePopup()">×</button>
-            <h2>SPECJALNA OFERTA!</h2>
-            <p class="special-offer">Zapisz się dziś i otrzymaj ekskluzywny zestaw tapet K-Pop w wysokiej
-                rozdzielczości!</p>
-            <p>+ 10% zniżki na pierwszy zakup w naszym sklepie</p>
+            <h2>SPECJALNA OFERTA DLA NOWYCH KLIENTÓW!</h2>
+            <p class="special-offer">Zapisz się dziś i otrzymaj <strong>10% RABATU</strong> na pierwsze zakupy!</p>
+            <p>+ Darmowa dostawa przy zamówieniu powyżej 200zł</p>
             <form class="newsletter-form" onsubmit="handlePopupSubmit(event)">
                 <div class="form-group" style="margin-top: 1rem;">
                     <input type="email" class="form-input" placeholder="Twój adres email" required>
-                    <button type="submit" class="cta-button">Odbierz Prezent</button>
+                    <button type="submit" class="cta-button">Odbierz Rabat</button>
                 </div>
             </form>
         </div>
@@ -30,15 +28,20 @@
     <!-- HEADER -->
     <header id="header">
         <nav class="container">
-            <div class="logo">K-POP WORLD</div>
+            <div class="logo">K-POP STORE</div>
             <ul class="nav-links">
                 <li><a href="#home">Start</a></li>
-                <li><a href="#statistics">Statystyki</a></li>
-                <li><a href="#features">Dlaczego K-Pop?</a></li>
-                <li><a href="#countdown">Comeback</a></li>
+                <li><a href="#products">Produkty</a></li>
+                <li><a href="#artists">Grupy</a></li>
+                <li><a href="#features">Dlaczego My?</a></li>
                 <li><a href="#testimonials">Opinie</a></li>
-                <li><a href="#artists">Gwiazdy</a></li>
-                <li><a href="#newsletter">Newsletter</a></li>
+                <li><a href="#newsletter">Promocje</a></li>
+                <li class="cart-icon">
+                    <a href="#cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -46,111 +49,81 @@
     <!-- HERO SECTION -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Odkryj Magię K-Pop</h1>
-            <p>Wejdź do świata pełnego energii, kolorów i niesamowitej muzyki. Dołącz do globalnej społeczności fanów!
-            </p>
-            <a href="#newsletter" class="cta-button">Dołącz Teraz</a>
+            <h1>Oficjalny Merchandise K-Pop</h1>
+            <p>Albumsy, light sticks, fotokarty i oficjalne gadżety Twoich ulubionych grup. Szybka dostawa i 100% oryginalne produkty!</p>
+            <a href="#products" class="cta-button">Kup Teraz</a>
         </div>
     </section>
 
-    <!-- STATISTICS -->
-    <section class="statistics" id="statistics">
+    <!-- FEATURED PRODUCTS -->
+    <section class="products" id="products">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" data-target="50000000">0</div>
-                    <div class="stat-label">Fanów Worldwide</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="1000">0</div>
-                    <div class="stat-label">Artystów</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">Krajów</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="50">0</div>
-                    <div class="stat-label">Miliardów wyświetleń</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURES SECTION -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Dlaczego Pokochasz K-Pop?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎵</div>
-                    <h3>Chwytliwa Muzyka</h3>
-                    <p>Teledyski, które biją rekordy wyświetleń i piosenki, które zostają w głowie na długo.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💃</div>
-                    <h3>Niesamowite Tańce</h3>
-                    <p>Perfekcyjnie zsynchronizowane układy choreograficzne, które podbijają świat.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌟</div>
-                    <h3>Globalna Społeczność</h3>
-                    <p>Dołącz do milionów fanów na całym świecie i dziel swoją pasję z innymi.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- COUNTDOWN -->
-    <section class="countdown" id="countdown">
-        <div class="container">
-            <h2 class="section-title">Nadchodzący Comeback!</h2>
-            <p>Nowy album BTS już za:</p>
-            <div class="countdown-grid">
-                <div class="countdown-item">
-                    <div class="countdown-number" id="days">00</div>
-                    <div>Dni</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="hours">00</div>
-                    <div>Godzin</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="minutes">00</div>
-                    <div>Minut</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="seconds">00</div>
-                    <div>Sekund</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">Co Mówią Fani?</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "K-Pop całkowicie zmienił moje życie! Dzięki tej stronie poznałam niesamowitych ludzi z całego
-                        świata."
+            <h2 class="section-title">Bestsellery</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-badge">Bestseller</div>
+                    <img src="./images/BTS_Proof_album_cover_art.jpg" alt="BTS Album">
+                    <div class="product-info">
+                        <h3>BTS - Proof Album</h3>
+                        <p class="product-price">149 zł <span class="old-price">179 zł</span></p>
+                        <button class="add-to-cart" onclick="addToCart('BTS - Proof Album', 149)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
                     </div>
-                    <div class="testimonial-author">- Anna, 22 lata</div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Najlepsze źródło informacji o K-Pop! Zawsze pierwszi z najświeższymi newsami i comebackami."
+                <div class="product-card">
+                    <div class="product-badge">Nowość</div>
+                    <img src="./images/blackpink_light_stick.jpg" alt="BLACKPINK Light Stick">
+                    <div class="product-info">
+                        <h3>BLACKPINK Light Stick</h3>
+                        <p class="product-price">299 zł</p>
+                        <button class="add-to-cart" onclick="addToCart('BLACKPINK Light Stick', 299)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
                     </div>
-                    <div class="testimonial-author">- Marek, 19 lat</div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "Społeczność tutaj jest niesamowita! Wreszcie mogę dzielić swoją pasję z ludźmi, którzy
-                        rozumieją."
+                <div class="product-card">
+                    <img src="./images/twice_oficial_photocards.jpg" alt="TWICE Photocards">
+                    <div class="product-info">
+                        <h3>TWICE - Oficjalne Fotokarty</h3>
+                        <p class="product-price">49 zł</p>
+                        <button class="add-to-cart" onclick="addToCart('TWICE - Fotokarty', 49)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
                     </div>
-                    <div class="testimonial-author">- Zuzia, 25 lat</div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Ostatnie sztuki</div>
+                    <img src="./images/EXO - Oficjalna Bluza.jpg" alt="EXO Hoodie">
+                    <div class="product-info">
+                        <h3>EXO - Oficjalna Bluza</h3>
+                        <p class="product-price">199 zł</p>
+                        <button class="add-to-cart" onclick="addToCart('EXO - Bluza', 199)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Hit 2025 rokun</div>
+                    <img src="./images/kpdh.jpg" alt="Huntrix Album">
+                    <div class="product-info">
+                        <h3>Huntrix Album</h3>
+                        <p class="product-price">149 zł</p>
+                        <button class="add-to-cart" onclick="addToCart('Huntrix Album', 149)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Hit 2025 rokun</div>
+                    <img src="./images/Stray_kids_koszula.jpg" alt="Stray Kids - Koszula">
+                    <div class="product-info">
+                        <h3>Stray Kids - Koszula</h3>
+                        <p class="product-price">89 zł</p>
+                        <button class="add-to-cart" onclick="addToCart('Stray Kids - Koszula', 89)">
+                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,39 +132,134 @@
     <!-- ARTISTS SHOWCASE -->
     <section class="artists" id="artists">
         <div class="container">
-            <h2 class="section-title">Poznaj Gwiazdy</h2>
+            <h2 class="section-title">Kolekcje Grup</h2>
             <div class="artists-grid">
                 <div class="artist-card">
-                    <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                        alt="BTS">
+                    <img src="./images/BTS_Proof_album_cover_art.jpg" alt="BTS">
                     <div class="artist-info">
                         <h3>BTS</h3>
-                        <p>Globalny fenomen</p>
+                        <p>Albumsy, photobooks, light sticks</p>
+                        <a href="#bts-collection" class="collection-link">Zobacz kolekcję →</a>
                     </div>
                 </div>
                 <div class="artist-card">
-                    <img src="https://images.unsplash.com/photo-1599661048072-1f029bb262d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                        alt="BLACKPINK">
+                    <img src="./images/blackpink.jpg" alt="BLACKPINK">
                     <div class="artist-info">
                         <h3>BLACKPINK</h3>
-                        <p>Najpopularniejszy girlsband</p>
+                        <p>Merchandise, albumsy, akcesoria</p>
+                        <a href="#blackpink-collection" class="collection-link">Zobacz kolekcję →</a>
                     </div>
                 </div>
                 <div class="artist-card">
-                    <img src="https://images.unsplash.com/photo-1578632749014-ca77efd052eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                        alt="TWICE">
+                    <img src="./images/twice_oficial_photocards.jpg" alt="TWICE">
                     <div class="artist-info">
                         <h3>TWICE</h3>
-                        <p>Królowe comeback'ów</p>
+                        <p>Albumsy, fotokarty, gadżety</p>
+                        <a href="#twice-collection" class="collection-link">Zobacz kolekcję →</a>
                     </div>
                 </div>
                 <div class="artist-card">
-                    <img src="https://images.unsplash.com/photo-1544006657-9e4d4261f1b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                        alt="EXO">
+                    <img src="./images/EXO - Oficjalna Bluza.jpg" alt="EXO">
                     <div class="artist-info">
                         <h3>EXO</h3>
-                        <p>Kings of K-Pop</p>
+                        <p>Odzież, albumsy, kolekcje</p>
+                        <a href="#exo-collection" class="collection-link">Zobacz kolekcję →</a>
                     </div>
+                </div>
+                <div class="artist-card">
+                    <img src="./images/kpdh.jpg" alt="EXO">
+                    <div class="artist-info">
+                        <h3>Huntrix</h3>
+                        <p>Merchandise, albumsy, akcesoria</p>
+                        <a href="#huntrix-collection" class="collection-link">Zobacz kolekcję →</a>
+                    </div>
+                </div>
+                <div class="artist-card">
+                    <img src="./images/stray_kids.jpg" alt="EXO">
+                    <div class="artist-info">
+                        <h3>Huntrix</h3>
+                        <p>Merchandise, albumsy, akcesoria</p>
+                        <a href="#stray_kids-collection" class="collection-link">Zobacz kolekcję →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Dlaczego Warto Kupować u Nas?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>100% Oryginalne Produkty</h3>
+                    <p>Wszystkie produkty są oficjalnym merchandise'm od wytwórni.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Szybka Dostawa</h3>
+                    <p>Dostawa w 2-3 dni robocze. Darmowa dostawa od 200zł.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Bezpieczne Zakupy</h3>
+                    <p>Bezpieczne płatności SSL i łatwe zwroty w ciągu 14 dni.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHIPPING INFO -->
+    <section class="shipping">
+        <div class="container">
+            <div class="shipping-grid">
+                <div class="shipping-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Darmowa Dostawa</h3>
+                    <p>Od 200 zł</p>
+                </div>
+                <div class="shipping-item">
+                    <i class="fas fa-undo-alt"></i>
+                    <h3>Zwroty</h3>
+                    <p>14 dni na zwrot</p>
+                </div>
+                <div class="shipping-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Bezpieczne Płatności</h3>
+                    <p>SSL加密</p>
+                </div>
+                <div class="shipping-item">
+                    <i class="fas fa-headset"></i>
+                    <h3>Wsparcie 24/7</h3>
+                    <p>Pomoc techniczna</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Co Mówią Klienci?</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Zamówienie dotarło w 2 dni! Album był idealnie zapakowany, a do tego dostałam losową fotokartę gratis. Super sklep!"
+                    </div>
+                    <div class="testimonial-author">- Anna, 22 lata</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "W końcu znalazłam sklep z oficjalnym merchandise'm w Polsce. Light Stick BLACKPINK działa perfekcyjnie, dziękuję!"
+                    </div>
+                    <div class="testimonial-author">- Marek, 19 lat</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Szybka obsługa, profesjonalne podejście. Zamówiłam bluzę EXO i jest świetnej jakości. Na pewno wrócę po więcej!"
+                    </div>
+                    <div class="testimonial-author">- Zuzia, 25 lat</div>
                 </div>
             </div>
         </div>
@@ -200,9 +268,8 @@
     <!-- NEWSLETTER -->
     <section class="newsletter" id="newsletter">
         <div class="container">
-            <h2 class="section-title">Nie Przegap Nowości!</h2>
-            <p>Zapisz się do newslettera i bądź na bieżąco z najnowszymi comebackami, wydarzeniami i ekskluzywnymi
-                treściami.</p>
+            <h2 class="section-title">Nie Przegap Promocji!</h2>
+            <p>Zapisz się do newslettera i otrzymuj informacje o nowościach, promocjach i ekskluzywnych ofertach.</p>
             <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
                 <div class="form-group">
                     <input type="email" class="form-input" placeholder="Twój adres email" required>
@@ -217,8 +284,17 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <h3>K-POP WORLD</h3>
-                    <p>Twoje okno na świat koreańskiej popkultury.</p>
+                    <h3>K-POP STORE</h3>
+                    <p>Oficjalny sklep z merchandise K-Pop w Polsce. 100% oryginalne produkty.</p>
+                </div>
+                <div>
+                    <h3>Informacje</h3>
+                    <ul class="footer-links">
+                        <li><a href="#shipping">Dostawa i zwroty</a></li>
+                        <li><a href="#payments">Płatności</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                        <li><a href="#about">O nas</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h3>Social Media</h3>
@@ -232,24 +308,32 @@
                 </div>
                 <div>
                     <h3>Kontakt</h3>
-                    <p>email: hello@kpopworld.com</p>
+                    <p>email: sklep@kpopstore.pl</p>
+                    <p>tel: +48 123 456 789</p>
+                    <p>Godziny: 9:00-17:00</p>
                 </div>
             </div>
             <div style="text-align: center; padding-top: 2rem; border-top: 1px solid #555;">
-                <p>&copy; 2024 K-POP WORLD. Wszystkie prawa zastrzeżone.</p>
+                <p>&copy; 2024 K-POP STORE. Wszystkie prawa zastrzeżone.</p>
             </div>
         </div>
     </footer>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TD2XHQBB83"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'G-TD2XHQBB83');
-    </script>
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cart">
+        <div class="cart-header">
+            <h3>Twój Koszyk</h3>
+            <button class="close-cart" onclick="closeCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+        <div class="cart-total">
+            <strong>Razem: <span id="cartTotal">0</span> zł</strong>
+            <button class="checkout-btn">Do Kasy</button>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
 </body>
-
 </html>
