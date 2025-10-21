@@ -13,6 +13,7 @@
     --success-color: #28a745;
     --warning-color: #ff9800;
     --error-color: #ff4444;
+    --admin-color: #6f42c1;
 }
 
 body {
@@ -29,6 +30,114 @@ body {
     padding: 0 20px;
 }
 
+/* ADMIN PANEL STYLES (SPRAWKO: SYSTEMY CMS) */
+.admin-panel {
+    background: var(--light-color);
+    padding: 3rem 0;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.admin-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--admin-color);
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.admin-form input,
+.admin-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.admin-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* SOCIAL SHARE BUTTONS (SPRAWKO: MEDIA SPOŁECZNOŚCIOWE) */
+.social-share {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.share-btn {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share-btn:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+/* EMAIL STATS (SPRAWKO: MARKETING POCZTOWY) */
+.email-stats {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+
+/* ORDER LIST STYLES (SPRAWKO: SYSTEMY HANDLU ELEKTRONICZNEGO) */
+.order-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    border-left: 3px solid var(--success-color);
+}
+
+.order-number {
+    font-weight: bold;
+    color: var(--admin-color);
+}
+
+.order-total {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* CONVERSION TRACKING (SPRAWKO: SYSTEMY REKLAMY KONTEKSTOWEJ) */
+.conversion-badge {
+    background: var(--success-color);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+/* SEO ENHANCEMENTS (SPRAWKO: NARZĘDZIA POZYCJONOWANIA) */
+.schema-markup {
+    display: none;
+}
+
+/* Pozostałe style pozostają bez zmian jak w poprzedniej wersji */
 /* HEADER I NAWIGACJA */
 header {
     background: rgba(255, 255, 255, 0.95);
@@ -867,6 +976,15 @@ footer {
     .social-links {
         justify-content: center;
     }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-share {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -914,7 +1032,9 @@ a:focus {
     .cart-sidebar,
     .popup-overlay,
     .cart-icon,
-    .cta-button {
+    .cta-button,
+    .admin-panel,
+    .social-share {
         display: none !important;
     }
 }

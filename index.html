@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-POP STORE | Oficjalny Sklep z Merchandise K-Pop</title>
+    <meta name="description" content="Oficjalny sklep z merchandise K-Pop w Polsce. Albumsy, light sticks, fotokarty BTS, BLACKPINK, TWICE, EXO. Szybka dostawa, 100% oryginalne produkty.">
+    <meta name="keywords" content="k-pop, bts, blackpink, twice, exo, album, light stick, fotokarty, merchandise, sklep">
+    <meta name="author" content="K-POP STORE">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "K-POP STORE",
+        "description": "Oficjalny sklep z merchandise K-Pop w Polsce",
+        "url": "https://kpopstore.pl",
+        "telephone": "+48-123-456-789",
+        "email": "sklep@kpopstore.pl",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "PL"
+        },
+        "openingHours": "Mo-Fr 09:00-17:00"
+    }
+    </script>
+    
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -36,6 +58,7 @@
                 <li><a href="#features">Dlaczego My?</a></li>
                 <li><a href="#testimonials">Opinie</a></li>
                 <li><a href="#newsletter">Promocje</a></li>
+                <li><a href="#admin" onclick="toggleAdminPanel()">Admin</a></li>
                 <li class="cart-icon">
                     <a href="#cart">
                         <i class="fas fa-shopping-cart"></i>
@@ -52,6 +75,49 @@
             <h1>Oficjalny Merchandise K-Pop</h1>
             <p>Albumsy, light sticks, fotokarty i oficjalne gadżety Twoich ulubionych grup. Szybka dostawa i 100% oryginalne produkty!</p>
             <a href="#products" class="cta-button">Kup Teraz</a>
+            
+            <!-- Social Share Buttons -->
+            <div class="social-share" style="margin-top: 2rem;">
+                <button class="share-btn" onclick="shareOnFacebook()">
+                    <i class="fab fa-facebook"></i> Udostępnij
+                </button>
+                <button class="share-btn" onclick="shareOnTwitter()">
+                    <i class="fab fa-twitter"></i> Tweetnij
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN PANEL (SPRAWKO: SYSTEMY CMS) -->
+    <section class="admin-panel" id="admin" style="display: none; background: #f8f9fa; padding: 2rem 0;">
+        <div class="container">
+            <h2 class="section-title">Panel Administracyjny CMS</h2>
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3>Dodaj Nowy Produkt</h3>
+                    <form id="product-form" class="admin-form">
+                        <input type="text" id="product-name" placeholder="Nazwa produktu" required>
+                        <input type="number" id="product-price" placeholder="Cena (zł)" required>
+                        <input type="text" id="product-category" placeholder="Kategoria">
+                        <textarea id="product-description" placeholder="Opis produktu"></textarea>
+                        <button type="submit" class="cta-button">Dodaj Produkt</button>
+                    </form>
+                </div>
+                <div class="admin-card">
+                    <h3>Zarządzanie Zamówieniami</h3>
+                    <div id="orders-list">
+                        <!-- Orders will be loaded here -->
+                    </div>
+                    <button onclick="loadOrders()" class="cta-button">Załaduj Zamówienia</button>
+                </div>
+                <div class="admin-card">
+                    <h3>Statystyki Newslettera</h3>
+                    <div id="newsletter-stats">
+                        <p>Zapisanych użytkowników: <span id="subscriber-count">0</span></p>
+                        <button onclick="exportSubscribers()" class="cta-button">Eksportuj CSV</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -59,72 +125,8 @@
     <section class="products" id="products">
         <div class="container">
             <h2 class="section-title">Bestsellery</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-badge">Bestseller</div>
-                    <img src="./images/BTS_Proof_album_cover_art.jpg" alt="BTS Album">
-                    <div class="product-info">
-                        <h3>BTS - Proof Album</h3>
-                        <p class="product-price">149 zł <span class="old-price">179 zł</span></p>
-                        <button class="add-to-cart" onclick="addToCart('BTS - Proof Album', 149)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">Nowość</div>
-                    <img src="./images/blackpink_light_stick.jpg" alt="BLACKPINK Light Stick">
-                    <div class="product-info">
-                        <h3>BLACKPINK Light Stick</h3>
-                        <p class="product-price">299 zł</p>
-                        <button class="add-to-cart" onclick="addToCart('BLACKPINK Light Stick', 299)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="./images/twice_oficial_photocards.jpg" alt="TWICE Photocards">
-                    <div class="product-info">
-                        <h3>TWICE - Oficjalne Fotokarty</h3>
-                        <p class="product-price">49 zł</p>
-                        <button class="add-to-cart" onclick="addToCart('TWICE - Fotokarty', 49)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">Ostatnie sztuki</div>
-                    <img src="./images/EXO - Oficjalna Bluza.jpg" alt="EXO Hoodie">
-                    <div class="product-info">
-                        <h3>EXO - Oficjalna Bluza</h3>
-                        <p class="product-price">199 zł</p>
-                        <button class="add-to-cart" onclick="addToCart('EXO - Bluza', 199)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">Hit 2025 rokun</div>
-                    <img src="./images/kpdh.jpg" alt="Huntrix Album">
-                    <div class="product-info">
-                        <h3>Huntrix Album</h3>
-                        <p class="product-price">149 zł</p>
-                        <button class="add-to-cart" onclick="addToCart('Huntrix Album', 149)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">Hit 2025 rokun</div>
-                    <img src="./images/Stray_kids_koszula.jpg" alt="Stray Kids - Koszula">
-                    <div class="product-info">
-                        <h3>Stray Kids - Koszula</h3>
-                        <p class="product-price">89 zł</p>
-                        <button class="add-to-cart" onclick="addToCart('Stray Kids - Koszula', 89)">
-                            <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                        </button>
-                    </div>
-                </div>
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded dynamically -->
             </div>
         </div>
     </section>
@@ -276,6 +278,11 @@
                     <button type="submit" class="cta-button">Zapisz Się</button>
                 </div>
             </form>
+            
+            <!-- Email Marketing Stats -->
+            <div class="email-stats" style="margin-top: 2rem; color: white;">
+                <p><small>Dołącz do <span id="total-subscribers">0</span> zadowolonych subskrybentów</small></p>
+            </div>
         </div>
     </section>
 
@@ -299,11 +306,11 @@
                 <div>
                     <h3>Social Media</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" onclick="trackSocialClick('facebook')"><i class="fab fa-facebook"></i></a>
+                        <a href="#" onclick="trackSocialClick('instagram')"><i class="fab fa-instagram"></i></a>
+                        <a href="#" onclick="trackSocialClick('twitter')"><i class="fab fa-twitter"></i></a>
+                        <a href="#" onclick="trackSocialClick('youtube')"><i class="fab fa-youtube"></i></a>
+                        <a href="#" onclick="trackSocialClick('tiktok')"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
                 <div>
@@ -315,6 +322,10 @@
             </div>
             <div style="text-align: center; padding-top: 2rem; border-top: 1px solid #555;">
                 <p>&copy; 2024 K-POP STORE. Wszystkie prawa zastrzeżone.</p>
+                <!-- SEO Footer -->
+                <p style="font-size: 0.8rem; color: #888;">
+                    Sklep K-Pop | Merchandise BTS, BLACKPINK, TWICE | Oficjalne albumsy i gadżety
+                </p>
             </div>
         </div>
     </footer>
@@ -330,9 +341,18 @@
         </div>
         <div class="cart-total">
             <strong>Razem: <span id="cartTotal">0</span> zł</strong>
-            <button class="checkout-btn">Do Kasy</button>
+            <button class="checkout-btn" onclick="processOrder()">Do Kasy</button>
         </div>
     </div>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TD2XHQBB83"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-TD2XHQBB83');
+    </script>
 
     <script src="./script.js"></script>
 </body>
