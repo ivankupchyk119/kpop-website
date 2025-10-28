@@ -4,13 +4,14 @@ let cartCount = 0;
 let cartTotal = 0;
 
 // ========== SPRAWKO 1: SYSTEMY CMS ==========
-let products = [
-    { id: 1, name: "BTS - Proof Album", price: 149, category: "Albums", description: "Oficjalny album BTS Proof" },
-    { id: 2, name: "BLACKPINK Light Stick", price: 299, category: "Akcesoria", description: "Oficjalny light stick BLACKPINK" },
-    { id: 3, name: "TWICE - Oficjalne Fotokarty", price: 49, category: "Kolekcje", description: "Zestaw oficjalnych fotokart TWICE" },
-    { id: 4, name: "EXO - Oficjalna Bluza", price: 199, category: "Kolekcje", description: "Oficjalna Bluza EXO" },
-    { id: 5, name: "Huntrix Album", price: 149, category: "Albums", description: "Oficjalny album Huntrix" },
-    { id: 6, name: "Stray Kids - Koszula", price: 89, category: "Akcesoria", description: "Oficjalna koszula Stray Kids" }
+// Ładujemy produkty z LocalStorage lub używamy domyślnych
+let products = JSON.parse(localStorage.getItem('products')) || [
+    { id: 1, name: "BTS - Proof Album", price: 149, category: "Albums", description: "Oficjalny album BTS Proof", image: "./images/BTS_Proof_album_cover_art.jpg" },
+    { id: 2, name: "BLACKPINK Light Stick", price: 299, category: "Akcesoria", description: "Oficjalny light stick BLACKPINK", image: "./images/blackpink_light_stick.jpg" },
+    { id: 3, name: "TWICE - Oficjalne Fotokarty", price: 49, category: "Kolekcje", description: "Zestaw oficjalnych fotokart TWICE", image: "./images/twice_oficial_photocards.jpg" },
+    { id: 4, name: "EXO - Oficjalna Bluza", price: 199, category: "Kolekcje", description: "Oficjalna Bluza EXO", image: "./images/EXO - Oficjalna Bluza.jpg" },
+    { id: 5, name: "Huntrix Album", price: 149, category: "Albums", description: "Oficjalny album Huntrix", image: "./images/kpdh.jpg" },
+    { id: 6, name: "Stray Kids - Koszula", price: 89, category: "Akcesoria", description: "Oficjalna koszula Stray Kids", image: "./images/Stray_kids_koszula.jpg" }
 ];
 
 // ========== SPRAWKO 2: SYSTEMY HANDLU ELEKTRONICZNEGO ==========
@@ -100,6 +101,28 @@ function toggleAdminPanel() {
 function loadAdminData() {
     updateSubscriberCount();
     loadOrders();
+    loadProductsManagement();
+}
+
+// CMS - Zarządzanie produktami
+function loadProductsManagement() {
+    const productsContainer = document.getElementById('products-management');
+    if (!productsContainer) return;
+    
+    productsContainer.innerHTML = `
+        <h3>Zarządzanie Produktami (${products.length})</h3>
+        <div class="admin-products-list">
+            ${products.map(product => `
+                <div class="admin-product-item">
+                    <div class="product-info">
+                        <strong>${product.name}</strong> - ${product.price} zł
+                        <small>${product.category}</small>
+                    </div>
+                    <button onclick="deleteProduct(${product.id})" class="delete-btn">Usuń</button>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 // CMS - Dodawanie nowych produktów
@@ -110,27 +133,43 @@ document.getElementById('product-form')?.addEventListener('submit', function(e) 
     const price = parseInt(document.getElementById('product-price').value);
     const category = document.getElementById('product-category').value;
     const description = document.getElementById('product-description').value;
+    const image = document.getElementById('product-image').value || "./images/default-product.jpg";
     
     const newProduct = {
-        id: products.length + 1,
+        id: Date.now(), // Unikalne ID na podstawie timestamp
         name: name,
         price: price,
         category: category,
-        description: description
+        description: description,
+        image: image
     };
     
     products.push(newProduct);
     saveProductsToLocalStorage();
     renderProducts();
+    loadProductsManagement();
     
     document.getElementById('product-form').reset();
     showNotification('Produkt dodany pomyślnie!', 'success');
     trackConversion('product_added', 0, 'cms');
 });
 
+// CMS - Usuwanie produktów
+function deleteProduct(productId) {
+    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+        products = products.filter(product => product.id !== productId);
+        saveProductsToLocalStorage();
+        renderProducts();
+        loadProductsManagement();
+        showNotification('Produkt usunięty!', 'success');
+    }
+}
+
 // System handlu elektronicznego - Zarządzanie zamówieniami
 function loadOrders() {
     const ordersList = document.getElementById('orders-list');
+    if (!ordersList) return;
+    
     ordersList.innerHTML = '';
     
     if (orders.length === 0) {
@@ -142,13 +181,25 @@ function loadOrders() {
         const orderElement = document.createElement('div');
         orderElement.className = 'order-item';
         orderElement.innerHTML = `
-            <div class="order-number">Zamówienie: ${order.id}</div>
-            <div>Data: ${new Date(order.date).toLocaleDateString()}</div>
+            <div class="order-header">
+                <div class="order-number">Zamówienie: ${order.id}</div>
+                <div class="order-date">Data: ${new Date(order.date).toLocaleDateString()}</div>
+            </div>
             <div class="order-total">Suma: ${order.total} zł</div>
-            <div>Produkty: ${order.items.map(item => item.name).join(', ')}</div>
+            <div class="order-products">Produkty: ${order.items.map(item => item.name).join(', ')}</div>
+            <button onclick="deleteOrder('${order.id}')" class="delete-order-btn">Usuń zamówienie</button>
         `;
         ordersList.appendChild(orderElement);
     });
+}
+
+function deleteOrder(orderId) {
+    if (confirm('Czy na pewno chcesz usunąć to zamówienie?')) {
+        orders = orders.filter(order => order.id !== orderId);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        loadOrders();
+        showNotification('Zamówienie usunięte!', 'success');
+    }
 }
 
 function processOrder() {
@@ -188,8 +239,11 @@ function processOrder() {
 // Marketing pocztowy - Newsletter management
 function updateSubscriberCount() {
     const count = newsletterSubscribers.length;
-    document.getElementById('subscriber-count').textContent = count;
-    document.getElementById('total-subscribers').textContent = count;
+    const subscriberCountElement = document.getElementById('subscriber-count');
+    const totalSubscribersElement = document.getElementById('total-subscribers');
+    
+    if (subscriberCountElement) subscriberCountElement.textContent = count;
+    if (totalSubscribersElement) totalSubscribersElement.textContent = count;
 }
 
 function exportSubscribers() {
@@ -201,26 +255,60 @@ function exportSubscribers() {
     const csvContent = "data:text/csv;charset=utf-8," 
         + "Email,Data zapisu,Źródło\n"
         + newsletterSubscribers.map(sub => 
-            `${sub.email},${sub.date},${sub.source}`
+            `${sub.email},${new Date(sub.date).toLocaleDateString()},${sub.source}`
         ).join("\n");
     
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "subskrybenci_newsletter.csv");
+    link.setAttribute("download", `subskrybenci_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     
     trackConversion('subscribers_export', newsletterSubscribers.length, 'email_marketing');
+    showNotification('Lista subskrybentów wyeksportowana!', 'success');
+}
+
+// ========== PRODUCTS MANAGEMENT ==========
+function saveProductsToLocalStorage() {
+    localStorage.setItem('products', JSON.stringify(products));
+}
+
+function loadProductsFromLocalStorage() {
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+        products = JSON.parse(savedProducts);
+    }
+}
+
+function renderProducts() {
+    const container = document.getElementById('products-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <div class="product-badge">Nowość</div>
+            <img src="${product.image}" alt="${product.name}" onerror="this.src='./images/default-product.jpg'">
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="product-category">Kategoria: ${product.category}</p>
+                <p class="product-price">${product.price} zł</p>
+                <button class="add-to-cart" onclick="addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price})">
+                    <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
+                </button>
+            </div>
+        `;
+        container.appendChild(productCard);
+    });
 }
 
 // ========== CORE SHOP FUNCTIONS ==========
-function solveSimpleChallenge() {
-    console.log('Simple challenge solved');
-    return true;
-}
-
 function addToCart(productName, price) {
     cart.push({ name: productName, price: price });
     cartCount++;
@@ -363,55 +451,6 @@ function closeCart() {
     }
 }
 
-// ========== PRODUCTS MANAGEMENT ==========
-function saveProductsToLocalStorage() {
-    localStorage.setItem('products', JSON.stringify(products));
-}
-
-function loadProductsFromLocalStorage() {
-    const savedProducts = localStorage.getItem('products');
-    if (savedProducts) {
-        products = JSON.parse(savedProducts);
-    }
-}
-
-function renderProducts() {
-    const container = document.getElementById('products-container');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    // Mapa zdjęć dla produktów
-    const productImages = {
-        "BTS - Proof Album": "./images/BTS_Proof_album_cover_art.jpg",
-        "BLACKPINK Light Stick": "./images/blackpink_light_stick.jpg", 
-        "TWICE - Oficjalne Fotokarty": "./images/twice_oficial_photocards.jpg",
-        "EXO - Oficjalna Bluza": "./images/EXO - Oficjalna Bluza.jpg",
-        "Huntrix Album": "./images/kpdh.jpg",
-        "Stray Kids - Koszula": "./images/Stray_kids_koszula.jpg"
-    };
-    
-    products.forEach(product => {
-        // Użyj odpowiedniego zdjęcia lub domyślnego
-        const productImage = productImages[product.name] || "./images/default-product.jpg";
-        
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <div class="product-badge">Nowość</div>
-            <img src="${productImage}" alt="${product.name}" onerror="this.src='./images/default-product.jpg'">
-            <div class="product-info">
-                <h3>${product.name}</h3>
-                <p class="product-price">${product.price} zł</p>
-                <button class="add-to-cart" onclick="addToCart('${product.name}', ${product.price})">
-                    <i class="fas fa-shopping-cart"></i> Dodaj do koszyka
-                </button>
-            </div>
-        `;
-        container.appendChild(productCard);
-    });
-}
-
 // ========== UTILITY FUNCTIONS ==========
 function generateOrderNumber() {
     return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
@@ -490,38 +529,9 @@ function init() {
     if (!popupShown) {
         showPopup();
     }
-    
-    // Rozwiąż proste wyzwanie jeśli jest wymagane
-    if (typeof solveSimpleChallenge === 'function') {
-        solveSimpleChallenge();
-    }
 }
 
 // Pozostałe funkcje pozostają bez zmian...
-// (initSmoothScroll, initHeaderScroll, initCart, checkScroll, showPopup, closePopup, addStyles)
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', init);
-window.addEventListener('scroll', checkScroll);
-
-// Eksport funkcji dla globalnego dostępu
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
-window.openCart = openCart;
-window.closeCart = closeCart;
-window.closePopup = closePopup;
-window.handlePopupSubmit = handlePopupSubmit;
-window.handleNewsletterSubmit = handleNewsletterSubmit;
-window.solveSimpleChallenge = solveSimpleChallenge;
-window.toggleAdminPanel = toggleAdminPanel;
-window.loadOrders = loadOrders;
-window.exportSubscribers = exportSubscribers;
-window.shareOnFacebook = shareOnFacebook;
-window.shareOnTwitter = shareOnTwitter;
-window.trackSocialClick = trackSocialClick;
-window.processOrder = processOrder;
-
-// Pozostałe funkcje pomocnicze...
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -662,6 +672,104 @@ function addStyles() {
             background: rgba(0,0,0,0.5);
             z-index: 1999;
         }
+
+        /* ADMIN PRODUCTS MANAGEMENT STYLES */
+        .admin-products-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .admin-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid var(--admin-color);
+        }
+
+        .admin-product-item .product-info {
+            flex: 1;
+        }
+
+        .admin-product-item .product-info strong {
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .admin-product-item .product-info small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .delete-btn, .delete-order-btn {
+            background: var(--error-color);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover, .delete-order-btn:hover {
+            background: #cc0000;
+        }
+
+        /* PRODUCT CARD ENHANCEMENTS */
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            min-height: 40px;
+        }
+
+        .product-category {
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ORDER ITEM STYLES */
+        .order-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 3px solid var(--success-color);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-number {
+            font-weight: bold;
+            color: var(--admin-color);
+        }
+
+        .order-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-total {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-products {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
     `;
     document.head.appendChild(style);
 }
@@ -678,3 +786,25 @@ function checkScroll() {
         }
     });
 }
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('scroll', checkScroll);
+
+// Eksport funkcji dla globalnego dostępu
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.openCart = openCart;
+window.closeCart = closeCart;
+window.closePopup = closePopup;
+window.handlePopupSubmit = handlePopupSubmit;
+window.handleNewsletterSubmit = handleNewsletterSubmit;
+window.toggleAdminPanel = toggleAdminPanel;
+window.loadOrders = loadOrders;
+window.exportSubscribers = exportSubscribers;
+window.shareOnFacebook = shareOnFacebook;
+window.shareOnTwitter = shareOnTwitter;
+window.trackSocialClick = trackSocialClick;
+window.processOrder = processOrder;
+window.deleteProduct = deleteProduct;
+window.deleteOrder = deleteOrder;

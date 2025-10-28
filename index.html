@@ -99,16 +99,23 @@
                         <input type="text" id="product-name" placeholder="Nazwa produktu" required>
                         <input type="number" id="product-price" placeholder="Cena (zł)" required>
                         <input type="text" id="product-category" placeholder="Kategoria">
+                        <input type="text" id="product-image" placeholder="URL obrazka (opcjonalnie)">
                         <textarea id="product-description" placeholder="Opis produktu"></textarea>
                         <button type="submit" class="cta-button">Dodaj Produkt</button>
                     </form>
+                </div>
+                <div class="admin-card">
+                    <h3>Zarządzanie Produktami</h3>
+                    <div id="products-management">
+                        <!-- Products will be loaded here -->
+                    </div>
                 </div>
                 <div class="admin-card">
                     <h3>Zarządzanie Zamówieniami</h3>
                     <div id="orders-list">
                         <!-- Orders will be loaded here -->
                     </div>
-                    <button onclick="loadOrders()" class="cta-button">Załaduj Zamówienia</button>
+                    <button onclick="loadOrders()" class="cta-button">Odśwież Zamówienia</button>
                 </div>
                 <div class="admin-card">
                     <h3>Statystyki Newslettera</h3>
