@@ -47,6 +47,24 @@
         </div>
     </div>
 
+    <!-- LOGIN MODAL -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-content">
+            <button class="close-login" onclick="closeLogin()">×</button>
+            <h2>Logowanie Administratora</h2>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="adminLogin" placeholder="Login" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="adminPassword" placeholder="Hasło" required>
+                </div>
+                <button type="submit" class="cta-button">Zaloguj się</button>
+            </form>
+            <div id="loginError" class="error-message" style="display: none; color: red; margin-top: 1rem;"></div>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header id="header">
         <nav class="container">
@@ -58,7 +76,7 @@
                 <li><a href="#features">Dlaczego My?</a></li>
                 <li><a href="#testimonials">Opinie</a></li>
                 <li><a href="#newsletter">Promocje</a></li>
-                <li><a href="#admin" onclick="toggleAdminPanel()">Admin</a></li>
+                <li><a href="#admin" onclick="showLogin()">Admin</a></li>
                 <li class="cart-icon">
                     <a href="#cart">
                         <i class="fas fa-shopping-cart"></i>
@@ -91,7 +109,12 @@
     <!-- ADMIN PANEL (SPRAWKO: SYSTEMY CMS) -->
     <section class="admin-panel" id="admin" style="display: none; background: #f8f9fa; padding: 2rem 0;">
         <div class="container">
-            <h2 class="section-title">Panel Administracyjny CMS</h2>
+            <div class="admin-header">
+                <h2 class="section-title">Panel Administracyjny CMS</h2>
+                <button class="logout-btn" onclick="logoutAdmin()">
+                    <i class="fas fa-sign-out-alt"></i> Wyloguj
+                </button>
+            </div>
             <div class="admin-grid">
                 <div class="admin-card">
                     <h3>Dodaj Nowy Produkt</h3>

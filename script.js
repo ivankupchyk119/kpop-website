@@ -3,6 +3,14 @@ let cart = [];
 let cartCount = 0;
 let cartTotal = 0;
 
+// ========== SYSTEM LOGOWANIA ADMINISTRATORA ==========
+const ADMIN_CREDENTIALS = {
+    login: "admin",
+    password: "admin123"
+};
+
+let isAdminLoggedIn = false;
+
 // ========== SPRAWKO 1: SYSTEMY CMS ==========
 // Ładujemy produkty z LocalStorage lub używamy domyślnych
 let products = JSON.parse(localStorage.getItem('products')) || [
@@ -89,8 +97,71 @@ function shareOnTwitter() {
     trackConversion('social_share', 0, 'twitter');
 }
 
+// ========== FUNKCJE LOGOWANIA ==========
+function showLogin() {
+    event.preventDefault();
+    const loginOverlay = document.getElementById('loginOverlay');
+    if (loginOverlay) {
+        loginOverlay.style.display = 'flex';
+    }
+}
+
+function closeLogin() {
+    const loginOverlay = document.getElementById('loginOverlay');
+    if (loginOverlay) {
+        loginOverlay.style.display = 'none';
+        document.getElementById('loginError').style.display = 'none';
+        // Reset form
+        document.getElementById('adminLogin').value = '';
+        document.getElementById('adminPassword').value = '';
+    }
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const login = document.getElementById('adminLogin').value;
+    const password = document.getElementById('adminPassword').value;
+    const errorElement = document.getElementById('loginError');
+    
+    if (login === ADMIN_CREDENTIALS.login && password === ADMIN_CREDENTIALS.password) {
+        isAdminLoggedIn = true;
+        closeLogin();
+        toggleAdminPanel();
+        showNotification('Zalogowano pomyślnie!', 'success');
+        trackConversion('admin_login', 0, 'admin');
+    } else {
+        errorElement.textContent = 'Nieprawidłowy login lub hasło!';
+        errorElement.style.display = 'block';
+        trackConversion('admin_login_failed', 0, 'admin');
+    }
+}
+
+function logoutAdmin() {
+    isAdminLoggedIn = false;
+    const adminPanel = document.getElementById('admin');
+    if (adminPanel) {
+        adminPanel.style.display = 'none';
+    }
+    showNotification('Wylogowano pomyślnie!', 'success');
+    trackConversion('admin_logout', 0, 'admin');
+}
+
+function checkAdminAccess() {
+    if (!isAdminLoggedIn) {
+        showNotification('Dostęp zabroniony. Zaloguj się jako administrator.', 'warning');
+        return false;
+    }
+    return true;
+}
+
 // ========== ADMIN PANEL FUNCTIONS ==========
 function toggleAdminPanel() {
+    if (!checkAdminAccess()) {
+        showLogin();
+        return;
+    }
+    
     const adminPanel = document.getElementById('admin');
     adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
     if (adminPanel.style.display === 'block') {
@@ -99,6 +170,8 @@ function toggleAdminPanel() {
 }
 
 function loadAdminData() {
+    if (!checkAdminAccess()) return;
+    
     updateSubscriberCount();
     loadOrders();
     loadProductsManagement();
@@ -106,6 +179,8 @@ function loadAdminData() {
 
 // CMS - Zarządzanie produktami
 function loadProductsManagement() {
+    if (!checkAdminAccess()) return;
+    
     const productsContainer = document.getElementById('products-management');
     if (!productsContainer) return;
     
@@ -128,6 +203,11 @@ function loadProductsManagement() {
 // CMS - Dodawanie nowych produktów
 document.getElementById('product-form')?.addEventListener('submit', function(e) {
     e.preventDefault();
+    
+    if (!checkAdminAccess()) {
+        showLogin();
+        return;
+    }
     
     const name = document.getElementById('product-name').value;
     const price = parseInt(document.getElementById('product-price').value);
@@ -156,6 +236,11 @@ document.getElementById('product-form')?.addEventListener('submit', function(e) 
 
 // CMS - Usuwanie produktów
 function deleteProduct(productId) {
+    if (!checkAdminAccess()) {
+        showLogin();
+        return;
+    }
+    
     if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
         products = products.filter(product => product.id !== productId);
         saveProductsToLocalStorage();
@@ -167,6 +252,8 @@ function deleteProduct(productId) {
 
 // System handlu elektronicznego - Zarządzanie zamówieniami
 function loadOrders() {
+    if (!checkAdminAccess()) return;
+    
     const ordersList = document.getElementById('orders-list');
     if (!ordersList) return;
     
@@ -194,6 +281,11 @@ function loadOrders() {
 }
 
 function deleteOrder(orderId) {
+    if (!checkAdminAccess()) {
+        showLogin();
+        return;
+    }
+    
     if (confirm('Czy na pewno chcesz usunąć to zamówienie?')) {
         orders = orders.filter(order => order.id !== orderId);
         localStorage.setItem('orders', JSON.stringify(orders));
@@ -247,6 +339,11 @@ function updateSubscriberCount() {
 }
 
 function exportSubscribers() {
+    if (!checkAdminAccess()) {
+        showLogin();
+        return;
+    }
+    
     if (newsletterSubscribers.length === 0) {
         showNotification('Brak subskrybentów do eksportu', 'warning');
         return;
@@ -808,3 +905,7 @@ window.trackSocialClick = trackSocialClick;
 window.processOrder = processOrder;
 window.deleteProduct = deleteProduct;
 window.deleteOrder = deleteOrder;
+window.showLogin = showLogin;
+window.closeLogin = closeLogin;
+window.handleLogin = handleLogin;
+window.logoutAdmin = logoutAdmin;
