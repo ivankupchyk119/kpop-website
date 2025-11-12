@@ -626,6 +626,9 @@ function init() {
     if (!popupShown) {
         showPopup();
     }
+    
+    // Pokaż pop-ad baner
+    showPopAd();
 }
 
 // Pozostałe funkcje pozostają bez zmian...
@@ -883,6 +886,87 @@ function checkScroll() {
         }
     });
 }
+// ========== POP-AD BANER FUNCTIONS ==========
+let popAdTimerInterval;
+
+function showPopAd() {
+    // Sprawdź czy użytkownik już widział baner w tej sesji
+    const popAdShown = sessionStorage.getItem('popAdShown');
+    const popAdTemporarilyClosed = sessionStorage.getItem('popAdTemporarilyClosed');
+    
+    if (!popAdShown && !popAdTemporarilyClosed) {
+        setTimeout(() => {
+            const popAd = document.getElementById('popAd');
+            if (popAd) {
+                popAd.style.display = 'flex';
+                startPopAdTimer();
+                trackConversion('pop_ad_shown', 0, 'advertising');
+            }
+        }, 5000); // Pokazuj po 5 sekundach
+    }
+}
+
+function closePopAd() {
+    const popAd = document.getElementById('popAd');
+    if (popAd) {
+        popAd.style.display = 'none';
+        sessionStorage.setItem('popAdShown', 'true');
+        clearInterval(popAdTimerInterval);
+        trackConversion('pop_ad_closed', 0, 'advertising');
+    }
+}
+
+function closePopAdTemporarily() {
+    const popAd = document.getElementById('popAd');
+    if (popAd) {
+        popAd.style.display = 'none';
+        sessionStorage.setItem('popAdTemporarilyClosed', 'true');
+        clearInterval(popAdTimerInterval);
+        
+        // Reset after 1 hour
+        setTimeout(() => {
+            sessionStorage.removeItem('popAdTemporarilyClosed');
+        }, 60 * 60 * 1000);
+        
+        trackConversion('pop_ad_later', 0, 'advertising');
+    }
+}
+
+function startPopAdTimer() {
+    const endTime = Date.now() + (24 * 60 * 60 * 1000); // 24 hours from now
+    
+    popAdTimerInterval = setInterval(() => {
+        const now = Date.now();
+        const timeLeft = endTime - now;
+        
+        if (timeLeft <= 0) {
+            clearInterval(popAdTimerInterval);
+            updateTimerDisplay(0, 0, 0);
+            return;
+        }
+        
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        updateTimerDisplay(hours, minutes, seconds);
+    }, 1000);
+}
+
+function updateTimerDisplay(hours, minutes, seconds) {
+    const hoursElement = document.getElementById('timerHours');
+    const minutesElement = document.getElementById('timerMinutes');
+    const secondsElement = document.getElementById('timerSeconds');
+    
+    if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
+    if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
+    if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
+}
+
+// Track when user clicks on pop-ad CTA
+function trackPopAdClick() {
+    trackConversion('pop_ad_click', 0, 'advertising');
+}
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', init);
@@ -909,3 +993,6 @@ window.showLogin = showLogin;
 window.closeLogin = closeLogin;
 window.handleLogin = handleLogin;
 window.logoutAdmin = logoutAdmin;
+window.closePopAd = closePopAd;
+window.closePopAdTemporarily = closePopAdTemporarily;
+window.trackPopAdClick = trackPopAdClick;

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-POP STORE | Oficjalny Sklep z Merchandise K-Pop</title>
-    <meta name="description" content="Oficjalny sklep z merchandise K-Pop w Polsce. Albumsy, light sticks, fotokarty BTS, BLACKPINK, TWICE, EXO. Szybka dostawa, 100% oryginalne produkty.">
-    <meta name="keywords" content="k-pop, bts, blackpink, twice, exo, album, light stick, fotokarty, merchandise, sklep">
+    <meta name="description"
+        content="Oficjalny sklep z merchandise K-Pop w Polsce. Albumsy, light sticks, fotokarty BTS, BLACKPINK, TWICE, EXO. Szybka dostawa, 100% oryginalne produkty.">
+    <meta name="keywords"
+        content="k-pop, bts, blackpink, twice, exo, album, light stick, fotokarty, merchandise, sklep">
     <meta name="author" content="K-POP STORE">
-    
+
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -25,7 +28,7 @@
         "openingHours": "Mo-Fr 09:00-17:00"
     }
     </script>
-    
+
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -44,6 +47,46 @@
                     <button type="submit" class="cta-button">Odbierz Rabat</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- POP-AD BANER -->
+    <div class="pop-ad-overlay" id="popAd">
+        <div class="pop-ad-content">
+            <button class="close-pop-ad" onclick="closePopAd()">×</button>
+            <div class="pop-ad-header">
+                <h3>SPECJALNA PROMOCJA!</h3>
+                <span class="ad-badge">LIMITOWANA OFERTA</span>
+            </div>
+            <div class="pop-ad-body">
+                <img src="./images/adver2.jpg" alt="Specjalna promocja K-POP STORE" class="pop-ad-image">
+                <div class="pop-ad-text">
+                    <h4>DO -50% NA WSZYSTKIE ALBUMY!</h4>
+                    <p>Tylko do końca tygodnia! Nie przegap okazji na oficjalne albumsy BTS, BLACKPINK, TWICE i innych
+                        grup.</p>
+                    <div class="pop-ad-timer" id="popAdTimer">
+                        <div class="timer-item">
+                            <span id="timerHours">24</span>
+                            <small>godzin</small>
+                        </div>
+                        <div class="timer-item">
+                            <span id="timerMinutes">00</span>
+                            <small>minut</small>
+                        </div>
+                        <div class="timer-item">
+                            <span id="timerSeconds">00</span>
+                            <small>sekund</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-ad-footer">
+                <a href="#products" class="cta-button pop-ad-cta" onclick="closePopAd()">
+                    <i class="fas fa-bolt"></i> SPRAWDŹ PROMOCJE
+                </a>
+                <button class="pop-ad-later" onclick="closePopAdTemporarily()">
+                    Pokaż później
+                </button>
+            </div>
         </div>
     </div>
 
@@ -91,9 +134,10 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Oficjalny Merchandise K-Pop</h1>
-            <p>Albumsy, light sticks, fotokarty i oficjalne gadżety Twoich ulubionych grup. Szybka dostawa i 100% oryginalne produkty!</p>
+            <p>Albumsy, light sticks, fotokarty i oficjalne gadżety Twoich ulubionych grup. Szybka dostawa i 100%
+                oryginalne produkty!</p>
             <a href="#products" class="cta-button">Kup Teraz</a>
-            
+
             <!-- Social Share Buttons -->
             <div class="social-share" style="margin-top: 2rem;">
                 <button class="share-btn" onclick="shareOnFacebook()">
@@ -277,19 +321,22 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-text">
-                        "Zamówienie dotarło w 2 dni! Album był idealnie zapakowany, a do tego dostałam losową fotokartę gratis. Super sklep!"
+                        "Zamówienie dotarło w 2 dni! Album był idealnie zapakowany, a do tego dostałam losową fotokartę
+                        gratis. Super sklep!"
                     </div>
                     <div class="testimonial-author">- Anna, 22 lata</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-text">
-                        "W końcu znalazłam sklep z oficjalnym merchandise'm w Polsce. Light Stick BLACKPINK działa perfekcyjnie, dziękuję!"
+                        "W końcu znalazłam sklep z oficjalnym merchandise'm w Polsce. Light Stick BLACKPINK działa
+                        perfekcyjnie, dziękuję!"
                     </div>
                     <div class="testimonial-author">- Marek, 19 lat</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-text">
-                        "Szybka obsługa, profesjonalne podejście. Zamówiłam bluzę EXO i jest świetnej jakości. Na pewno wrócę po więcej!"
+                        "Szybka obsługa, profesjonalne podejście. Zamówiłam bluzę EXO i jest świetnej jakości. Na pewno
+                        wrócę po więcej!"
                     </div>
                     <div class="testimonial-author">- Zuzia, 25 lat</div>
                 </div>
@@ -308,7 +355,7 @@
                     <button type="submit" class="cta-button">Zapisz Się</button>
                 </div>
             </form>
-            
+
             <!-- Email Marketing Stats -->
             <div class="email-stats" style="margin-top: 2rem; color: white;">
                 <p><small>Dołącz do <span id="total-subscribers">0</span> zadowolonych subskrybentów</small></p>
@@ -350,6 +397,14 @@
                     <p>Godziny: 9:00-17:00</p>
                 </div>
             </div>
+
+            <!-- Baner reklamowy w stopce -->
+            <div class="footer-ad">
+                <a href="https://example.com" target="_blank">
+                    <img src="./images/advert1.jpg" alt="Reklama">
+                </a>
+            </div>
+
             <div style="text-align: center; padding-top: 2rem; border-top: 1px solid #555;">
                 <p>&copy; 2024 K-POP STORE. Wszystkie prawa zastrzeżone.</p>
                 <!-- SEO Footer -->
@@ -359,6 +414,7 @@
             </div>
         </div>
     </footer>
+
 
     <!-- CART SIDEBAR -->
     <div class="cart-sidebar" id="cart">
@@ -379,11 +435,12 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TD2XHQBB83"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-TD2XHQBB83');
     </script>
 
     <script src="./script.js"></script>
 </body>
+
 </html>

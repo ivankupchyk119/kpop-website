@@ -734,6 +734,29 @@ footer {
 .footer-links a:hover {
     color: var(--primary-color);
 }
+/* Styl dla banera reklamowego w stopce */
+.footer-ad {
+    text-align: center; /* Wyrównanie banera do środka */
+    margin-top: 20px; /* Odstęp od reszty zawartości */
+    padding: 10px 0; /* Odstępy wewnętrzne */
+    background-color: #333; /* Tło banera */
+    border-radius: 8px; /* Zaokrąglone rogi */
+}
+
+.footer-ad img {
+    width: 100%; /* Dopasowanie szerokości */
+    max-width: 468px; /* Maksymalna szerokość banera */
+    height: auto; /* Automatyczna wysokość */
+    border-radius: 8px; /* Zaokrąglenie obrazka */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Cień wokół banera */
+}
+
+/* Dodanie efektu na hover */
+.footer-ad a:hover img {
+    opacity: 0.8; /* Zmniejszenie przezroczystości na hover */
+    transition: opacity 0.3s ease; /* Animacja */
+}
+
 
 .social-links {
     display: flex;
@@ -1145,5 +1168,266 @@ a:focus {
     .admin-panel,
     .social-share {
         display: none !important;
+    }
+}
+/* POP-AD BANER STYLES */
+.pop-ad-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+    animation: fadeIn 0.5s ease;
+}
+
+.pop-ad-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: popInScale 0.6s ease;
+    border: 3px solid #ff4d8d;
+}
+
+.pop-ad-header {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.pop-ad-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.ad-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: #ff4d8d;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+.pop-ad-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.pop-ad-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.pop-ad-text {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.pop-ad-text h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    color: #ffeb3b;
+}
+
+.pop-ad-text p {
+    margin: 0 0 1.5rem 0;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.pop-ad-timer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.timer-item {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.8rem;
+    border-radius: 10px;
+    min-width: 70px;
+    backdrop-filter: blur(10px);
+}
+
+.timer-item span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffeb3b;
+}
+
+.timer-item small {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.pop-ad-footer {
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.pop-ad-cta {
+    background: linear-gradient(45deg, #ff4d8d, #ff3366);
+    border: none;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.pop-ad-cta:hover {
+    background: linear-gradient(45deg, #ff3366, #ff1a53);
+    transform: translateY(-2px);
+}
+
+.pop-ad-later {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.pop-ad-later:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.close-pop-ad {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    z-index: 10;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-pop-ad:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Animations for pop-ad */
+@keyframes popInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 77, 141, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 77, 141, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 77, 141, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive styles for pop-ad */
+@media (max-width: 768px) {
+    .pop-ad-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .pop-ad-timer {
+        gap: 0.5rem;
+    }
+    
+    .timer-item {
+        min-width: 60px;
+        padding: 0.6rem;
+    }
+    
+    .timer-item span {
+        font-size: 1.5rem;
+    }
+    
+    .pop-ad-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .pop-ad-text h4 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pop-ad-body {
+        flex-direction: column;
+    }
+    
+    .pop-ad-image {
+        height: 150px;
+    }
+    
+    .pop-ad-timer {
+        flex-wrap: wrap;
+    }
+    
+    .pop-ad-cta {
+        font-size: 1rem;
+        padding: 12px 20px;
     }
 }
