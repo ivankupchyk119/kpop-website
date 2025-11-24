@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ivankupchyk119.github.io/kpop-website/sitemap.xml
