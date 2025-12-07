@@ -311,8 +311,23 @@ function processOrder() {
     localStorage.setItem('orders', JSON.stringify(orders));
     
     // Track conversion for advertising
-    trackConversion('purchase', cartTotal, 'ecommerce');
+    // УДАЛЕНА СТРОКА: trackConversion('purchase', cartTotal, 'ecommerce'); 
     
+    // === НОВОЕ: ОТПРАВКА ДАННЫХ О ПОКУПКЕ В GOOGLE ANALYTICS (Для ROI) ===
+    gtag('event', 'purchase', {
+        transaction_id: order.id, // Используем сгенерированный ID заказа
+        value: cartTotal, // Общая сумма заказа
+        currency: 'PLN',
+        items: cart.map(item => ({
+            // Используем уникальные данные товара
+            item_id: item.name.replace(/\s/g, '_'), // Преобразуем имя в ID
+            item_name: item.name,
+            price: item.price,
+            quantity: 1 // В вашем коде каждый товар в корзине - отдельный объект
+        }))
+    });
+    // ====================================================================
+
     showNotification(`Zamówienie #${order.id} złożone! Suma: ${cartTotal} zł`, 'success');
     
     // Reset cart
@@ -963,6 +978,33 @@ function updateTimerDisplay(hours, minutes, seconds) {
     if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
 }
 
+// ========== FUNKCJONALNOŚĆ: ZASTOSOWANIE KODU PROMOCYJNEGO ==========
+
+// UWAGA: Ta funkcja symuluje sprawdzanie kodu promocyjnego.
+// W rzeczywistej aplikacji kod powinien być sprawdzany na serwerze.
+const VALID_SOCIAL_CODE = "SOCIAL5OFF"; // Przykładowy, stały kod dla promocji 5%
+
+// Funkcja symulacji zastosowania kodu promocyjnego
+function applyPromoCode() {
+    // Получаем значение, переводим в верхний регистр и удаляем пробелы
+    const code = document.getElementById('promoCodeInput').value.toUpperCase().trim();
+    const statusElement = document.getElementById('promoStatus');
+
+    if (!code) {
+        statusElement.textContent = "Wprowadź kod promocyjny.";
+        return;
+    }
+    
+    // Symulacja sprawdzenia кода
+    if (code === VALID_SOCIAL_CODE) {
+        // Tutaj powinna być logika zastosowania rabatu do koszyka
+        statusElement.textContent = `✅ Kod promocyjny "${code}" na 5% został pomyślnie zastosowany do koszyka!`;
+        trackConversion('promo_code_applied', 5, 'social_code_entry');
+    } else {
+        statusElement.textContent = "❌ Nieprawidłowy lub nieaktywny kod promocyjny.";
+    }
+}
+// ===================================================================
 // Track when user clicks on pop-ad CTA
 function trackPopAdClick() {
     trackConversion('pop_ad_click', 0, 'advertising');
@@ -996,3 +1038,4 @@ window.logoutAdmin = logoutAdmin;
 window.closePopAd = closePopAd;
 window.closePopAdTemporarily = closePopAdTemporarily;
 window.trackPopAdClick = trackPopAdClick;
+window.applyPromoCode = applyPromoCode;

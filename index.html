@@ -431,6 +431,24 @@
             <button class="checkout-btn" onclick="processOrder()">Do Kasy</button>
         </div>
     </div>
+    <!-- Promo-->
+    <div class="social-promo-widget" id="socialPromoWidget">
+        <div class="promo-icon" id="promoIcon">
+            <span class="heart-icon">❤️</span>
+        </div>
+        
+        <div class="promo-content" id="promoContent">
+            <h4>✨ Masz kod na 5% rabatu? ✨</h4>
+            <p>Wpisz kod promocyjny, który otrzymałeś za udostępnienie nas w mediach społecznościowych!</p>
+            
+            <div class="promo-input-group">
+                <input type="text" id="promoCodeInput" placeholder="Wpisz kod, np. SOCIAL5...">
+                <button onclick="applyPromoCode()">Zastosuj</button>
+            </div>
+            
+            <p class="promo-status" id="promoStatus"></p>
+        </div>
+    </div>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TD2XHQBB83"></script>

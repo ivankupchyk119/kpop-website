@@ -1431,3 +1431,115 @@ a:focus {
         padding: 12px 20px;
     }
 }
+/* Social promo*/
+/* styles.css (Добавить в конце файла) */
+
+.social-promo-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: width 0.4s ease, height 0.4s ease;
+    width: 60px; /* Свернутое состояние */
+    height: 60px; /* Свернутое состояние */
+    overflow: hidden;
+    background-color: var(--primary-color); /* #ff4d8d */
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-promo-widget:hover {
+    width: 300px; /* Развернутое состояние */
+    height: auto;
+    min-height: 60px;
+    border-radius: 10px;
+}
+
+.promo-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+.social-promo-widget:hover .promo-icon {
+    opacity: 0;
+}
+
+.heart-icon {
+    font-size: 30px;
+    animation: pulse 2s infinite; /* Используем уже существующую анимацию pulse */
+}
+
+.promo-content {
+    opacity: 0;
+    padding: 15px;
+    color: var(--light-color);
+    width: 100%;
+    transition: opacity 0.4s ease 0.2s;
+}
+
+.social-promo-widget:hover .promo-content {
+    opacity: 1;
+}
+
+.promo-content h4 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.promo-content p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.promo-input-group {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+#promoCodeInput {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    color: var(--dark-color);
+}
+
+.promo-input-group button, .get-code-btn {
+    padding: 8px 12px;
+    border: none;
+    background-color: var(--secondary-color); /* #667eea */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.promo-input-group button {
+    border-radius: 0 5px 5px 0;
+}
+
+.get-code-btn {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.get-code-btn:hover {
+    background-color: #5a67d8;
+}
+
+.promo-status {
+    text-align: center;
+    font-weight: bold;
+    min-height: 1.2rem;
+}
+/* ============================================================== */
